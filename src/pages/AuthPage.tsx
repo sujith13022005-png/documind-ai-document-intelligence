@@ -143,9 +143,18 @@ export const AuthPage: React.FC<AuthPageProps> = ({
         </div>
 
         {errorMsg && (
-          <div className="p-3 bg-[#ffdad6]/60 border border-[#ba1a1a]/20 rounded-xl text-[12px] text-[#ba1a1a] flex items-center gap-2">
-            <span className="material-symbols-outlined text-[18px]">error</span>
-            <span>{errorMsg}</span>
+          <div className="p-3 bg-[#ffdad6]/60 border border-[#ba1a1a]/20 rounded-xl text-[12px] text-[#ba1a1a] flex items-center justify-between">
+            <div className="flex items-center gap-2 min-w-0 pr-2">
+              <span className="material-symbols-outlined text-[18px] shrink-0">error</span>
+              <span className="truncate">{errorMsg}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setErrorMsg('')}
+              className="text-[#ba1a1a] font-bold text-[14px] hover:opacity-75 p-1"
+            >
+              ✕
+            </button>
           </div>
         )}
 

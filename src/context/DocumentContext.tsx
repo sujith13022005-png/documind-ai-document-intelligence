@@ -46,15 +46,13 @@ export const DocumentProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     try {
       const res = await api.getDocuments();
       setDocuments(res.documents);
-      if (res.documents.length > 0 && !activeDoc) {
-        setActiveDoc(res.documents[0]);
-      }
+      setActiveDoc(prev => prev || (res.documents.length > 0 ? res.documents[0] : null));
     } catch (err) {
       console.warn('Failed to load documents:', err);
     } finally {
       setLoading(false);
     }
-  }, [activeDoc]);
+  }, []);
 
   useEffect(() => {
     refreshDocuments();

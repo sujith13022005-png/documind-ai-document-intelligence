@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDocuments } from '../context/DocumentContext';
 import { api } from '../services/api';
 
@@ -9,6 +9,13 @@ export const ComparePage: React.FC = () => {
   const [docBId, setDocBId] = useState<string>(documents[1]?.id || documents[0]?.id || '');
   const [isComparing, setIsComparing] = useState(false);
   const [comparisonResult, setComparisonResult] = useState<any>(null);
+
+  useEffect(() => {
+    if (documents.length > 0) {
+      if (!docAId) setDocAId(documents[0].id);
+      if (!docBId) setDocBId(documents[1]?.id || documents[0].id);
+    }
+  }, [documents, docAId, docBId]);
 
   const handleCompare = async () => {
     setIsComparing(true);

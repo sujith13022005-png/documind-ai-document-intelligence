@@ -52,14 +52,16 @@ export const InvoiceAnalyzerPage: React.FC = () => {
   };
 
   const handleExportCSV = () => {
+    if (!invoiceData) return;
+    const items = invoiceData.items || [];
     const rows = [
       ["Item Description", "Quantity", "Unit Price", "Amount"],
-      ...(invoiceData.items || []).map((i: any) => [
-        `"${i.description}"`, i.quantity, i.unitPrice, i.amount
+      ...items.map((i: any) => [
+        `"${i.description || ''}"`, i.quantity || 1, i.unitPrice || 0, i.amount || 0
       ]),
-      ["", "", "Subtotal", invoiceData.subtotal],
-      ["", "", "Tax (15%)", invoiceData.tax],
-      ["", "", "Total Due", invoiceData.total]
+      ["", "", "Subtotal", invoiceData.subtotal || 0],
+      ["", "", "Tax", invoiceData.tax || 0],
+      ["", "", "Total Due", invoiceData.total || 0]
     ];
     const csvContent = "data:text/csv;charset=utf-8," + rows.map(r => r.join(",")).join("\n");
     const encoded = encodeURI(csvContent);

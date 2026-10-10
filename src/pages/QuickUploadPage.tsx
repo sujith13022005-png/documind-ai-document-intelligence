@@ -298,6 +298,22 @@ export const QuickUploadPage: React.FC<QuickUploadPageProps> = ({ onNavigate }) 
                   </div>
                 )}
 
+                {/* Failed item state */}
+                {item.status === 'failed' && (
+                  <div className="mt-2 bg-[#ffdad6]/50 p-2 rounded-xl flex items-center justify-between border border-[#ba1a1a]/20">
+                    <div className="flex items-center gap-1.5 text-[#ba1a1a] text-[11px] font-semibold">
+                      <span className="material-symbols-outlined text-[16px]">error</span>
+                      <span>Extraction encountered an issue.</span>
+                    </div>
+                    <button
+                      onClick={() => setQueueItems(queueItems.filter(q => q.id !== item.id))}
+                      className="text-[11px] font-bold text-[#ba1a1a] hover:underline"
+                    >
+                      Clear
+                    </button>
+                  </div>
+                )}
+
                 {/* Completed summary action */}
                 {item.status === 'completed' && (
                   <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#eaedff]">
