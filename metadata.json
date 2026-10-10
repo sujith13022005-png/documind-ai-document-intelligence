@@ -1,0 +1,6 @@
+{
+  "name": "DocuMind AI",
+  "description": "Intelligent Document Management Platform powered by Gemini. Extract key data, summarize content, chat with documents, and automate invoice and certificate processing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
