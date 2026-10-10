@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useDocuments } from '../context/DocumentContext';
 import { DocumentItem } from '../types';
+import { api } from '../services/api';
 
 interface DocumentVaultPageProps {
   onNavigate: (tab: string, docId?: string) => void;
@@ -80,11 +81,17 @@ export const DocumentVaultPage: React.FC<DocumentVaultPageProps> = ({ onNavigate
     }
   };
 
-  const handleRename = () => {
+  const handleRename = async () => {
     if (!renameTarget || !newTitle.trim()) return;
-    renameTarget.fileName = newTitle.trim();
-    showToast(`Renamed to "${newTitle.trim()}"`, 'edit', 'success');
-    setRenameTarget(null);
+    try {
+      await api.updateDocument(renameTarget.id, { fileName: newTitle.trim() });
+      await refreshDocuments();
+      showToast(`Renamed to "${newTitle.trim()}"`, 'edit', 'success');
+    } catch (err: any) {
+      showToast('Rename failed: ' + (err.message || 'Error'), 'error', 'error');
+    } finally {
+      setRenameTarget(null);
+    }
   };
 
   const toggleSelectDoc = (id: string) => {

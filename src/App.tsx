@@ -25,6 +25,8 @@ import { CertificateAnalyzerPage } from './pages/CertificateAnalyzerPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { SettingsPage } from './pages/SettingsPage';
 
+import { ErrorBoundary } from './components/common/ErrorBoundary';
+
 function AppContent() {
   const { user } = useAuth();
   const [currentRoute, setCurrentRoute] = useState<string>('dashboard');
@@ -185,10 +187,12 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <DocumentProvider>
-        <AppContent />
-      </DocumentProvider>
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <DocumentProvider>
+          <AppContent />
+        </DocumentProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
